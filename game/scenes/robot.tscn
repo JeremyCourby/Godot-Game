@@ -1,0 +1,5 @@
+[gd_scene load_steps=2 format=3 uid="uid://cyg0urxn0vtxk"]
+
+[ext_resource type="PackedScene" uid="uid://bkakh27csm4a5" path="res://models/characters/robot/tutoria.glb" id="1_xnbsv"]
+
+[node name="Sketchfab_Scene" instance=ExtResource("1_xnbsv")]

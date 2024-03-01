@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://bc2fempenb2d7"]
+
+[ext_resource type="PackedScene" uid="uid://bglmc20lp3x6d" path="res://models/architecture/merry/one_piece_-going_merry (1).glb" id="1_mf4ur"]
+
+[node name="Sketchfab_Scene" instance=ExtResource("1_mf4ur")]
+transform = Transform3D(4, 0, 0, 0, 4, 0, 0, 0, 4, 0, 0, 0)

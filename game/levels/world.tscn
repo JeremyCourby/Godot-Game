@@ -1,0 +1,16 @@
+[gd_scene load_steps=4 format=3 uid="uid://cj61rl5qa6i3p"]
+
+[ext_resource type="PackedScene" uid="uid://cb2vvk3klkfb0" path="res://models/architecture/walls/wood_wall/army_wood_wall_01.glb" id="1_7x7aj"]
+[ext_resource type="Script" path="res://lib/spawn_point.gd" id="2_gtnjx"]
+[ext_resource type="PackedScene" uid="uid://dr7h8648k2r1i" path="res://models/architecture/ground/ground.glb" id="3_7521w"]
+
+[node name="World" type="Node3D"]
+
+[node name="Sketchfab_Scene2" parent="." instance=ExtResource("1_7x7aj")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+
+[node name="SpawnPoint" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.64384, -4.50253)
+script = ExtResource("2_gtnjx")
+
+[node name="Sketchfab_Scene" parent="." instance=ExtResource("3_7521w")]

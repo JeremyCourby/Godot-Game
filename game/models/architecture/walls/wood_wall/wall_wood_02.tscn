@@ -1,0 +1,15 @@
+[gd_scene load_steps=3 format=3 uid="uid://1ndrlovwmjxn"]
+
+[ext_resource type="PackedScene" uid="uid://crmy3pkss5ojx" path="res://models/architecture/walls/wood_wall/army_wood_wall_02.glb" id="1_jitki"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_gxoxc"]
+size = Vector3(4.03125, 4.41325, 0.478718)
+
+[node name="Sketchfab_Scene" instance=ExtResource("1_jitki")]
+
+[node name="StaticBody3D" type="StaticBody3D" parent="." index="1"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.00683594, 2.44835, 0.00143242)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D" index="0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.241783, 0)
+shape = SubResource("BoxShape3D_gxoxc")

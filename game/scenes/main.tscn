@@ -1,0 +1,75 @@
+[gd_scene load_steps=6 format=3 uid="uid://c6bkc3swfmbt"]
+
+[ext_resource type="Script" path="res://lib/main.gd" id="1_ggskb"]
+[ext_resource type="PackedScene" uid="uid://bggov3ak0ysqs" path="res://scenes/player.tscn" id="1_uqely"]
+[ext_resource type="Shader" path="res://lib/shaders.gdshader" id="3_5hlm0"]
+[ext_resource type="Texture2D" uid="uid://d3dyy3inem1qk" path="res://assets/textures/architecture/Travertine009_1K-JPG_Displacement.jpg" id="4_dchaq"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_bahvr"]
+shader = ExtResource("3_5hlm0")
+shader_parameter/amount = 1.034
+
+[node name="Main" type="Node3D"]
+process_mode = 3
+script = ExtResource("1_ggskb")
+
+[node name="Player" parent="." instance=ExtResource("1_uqely")]
+process_mode = 1
+
+[node name="Menu" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Blur" type="TextureRect" parent="Menu"]
+material = SubResource("ShaderMaterial_bahvr")
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("4_dchaq")
+
+[node name="Label" type="Label" parent="Menu/Blur"]
+layout_mode = 0
+offset_left = 37.0
+offset_top = 1022.0
+offset_right = 77.0
+offset_bottom = 1045.0
+text = "Infos"
+
+[node name="ButtonQuit" type="Button" parent="Menu"]
+layout_mode = 0
+offset_right = 42.0
+offset_bottom = 31.0
+text = "Quit"
+
+[node name="HUD" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Label" type="Label" parent="HUD"]
+layout_mode = 0
+offset_left = 38.0
+offset_top = 981.0
+offset_right = 78.0
+offset_bottom = 1004.0
+text = "Infos"
+
+[node name="TimerInfos" type="Timer" parent="."]
+wait_time = 0.5
+one_shot = true
+
+[connection signal="hit" from="Player" to="." method="_on_player_hit"]
+[connection signal="interaction_detected" from="Player" to="." method="_on_player_interaction_detected"]
+[connection signal="interaction_detected_end" from="Player" to="." method="_on_player_interaction_detected_end"]
+[connection signal="pressed" from="Menu/ButtonQuit" to="." method="_on_button_quit_pressed"]
+[connection signal="timeout" from="TimerInfos" to="." method="_on_timer_infos_timeout"]

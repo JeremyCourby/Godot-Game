@@ -1,0 +1,5 @@
+[gd_scene load_steps=2 format=3 uid="uid://cwngk8265mmn0"]
+
+[ext_resource type="PackedScene" uid="uid://0x3jcw4gsdbn" path="res://models/architecture/island/island_3/lowpoly_island (1).glb" id="1_tymdy"]
+
+[node name="Sketchfab_Scene" instance=ExtResource("1_tymdy")]

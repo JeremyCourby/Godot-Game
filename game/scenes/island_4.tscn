@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://3q3mdef2vhoo"]
+
+[ext_resource type="PackedScene" uid="uid://cd3sddtpiimsf" path="res://models/architecture/island/island_4/island_in_the_sky.glb" id="1_ac5lk"]
+
+[node name="Sketchfab_Scene" instance=ExtResource("1_ac5lk")]
+transform = Transform3D(4, 0, 0, 0, 4, 0, 0, 0, 4, 0, 0, 0)

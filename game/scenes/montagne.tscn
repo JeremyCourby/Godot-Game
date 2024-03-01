@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://cnx1ouk6ujljo"]
+
+[ext_resource type="PackedScene" uid="uid://ck6vg2n5yf4vn" path="res://models/architecture/mountain/montagne.glb" id="1_70aw1"]
+
+[node name="montagne" instance=ExtResource("1_70aw1")]
+transform = Transform3D(20, 0, 0, 0, 20, 0, 0, 0, 20, 0, 0, 0)

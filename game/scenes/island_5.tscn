@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://coad5qru7nlnt"]
+
+[ext_resource type="PackedScene" uid="uid://cbtd4ihx61evr" path="res://models/architecture/island/island_5/low_poly_island.glb" id="1_tf7vt"]
+
+[node name="Sketchfab_Scene" instance=ExtResource("1_tf7vt")]
+transform = Transform3D(7, 0, 0, 0, 7, 0, 0, 0, 7, 0, 0, 0)

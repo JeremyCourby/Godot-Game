@@ -1,0 +1,8 @@
+[gd_scene load_steps=2 format=3 uid="uid://c873jmp6nct13"]
+
+[ext_resource type="PackedScene" uid="uid://cri0gc87w43mk" path="res://models/architecture/ground/ground.tscn" id="1_rh53c"]
+
+[node name="Node3D" type="Node3D"]
+
+[node name="Sketchfab_Scene" parent="." instance=ExtResource("1_rh53c")]
+transform = Transform3D(0.06, 0, 0, 0, 15, 0, 0, 0, 0.06, 0, 0, 0)
