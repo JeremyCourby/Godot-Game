@@ -1,9 +1,10 @@
-[gd_scene load_steps=7 format=3 uid="uid://bggov3ak0ysqs"]
+[gd_scene load_steps=8 format=3 uid="uid://bggov3ak0ysqs"]
 
 [ext_resource type="Script" path="res://lib/player.gd" id="1_k5g6x"]
 [ext_resource type="PackedScene" uid="uid://ctoenkxklrdyj" path="res://scenes/paladin.tscn" id="1_stwfy"]
 [ext_resource type="AnimationLibrary" uid="uid://b3myt5j3na8ea" path="res://assets/animations/player.res" id="2_27x84"]
 [ext_resource type="PackedScene" uid="uid://d1qwpkyo280c1" path="res://scenes/health_bar_3d.tscn" id="4_juton"]
+[ext_resource type="PackedScene" uid="uid://bmpi03xqpl7ac" path="res://scenes/gun.tscn" id="5_qvd5u"]
 
 [sub_resource type="CylinderShape3D" id="CylinderShape3D_x0nrt"]
 radius = 0.3
@@ -55,6 +56,14 @@ offset_top = -90.0
 offset_right = 158.0
 offset_bottom = -70.0
 grow_vertical = 0
+
+[node name="head" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.75, 0)
+
+[node name="Camera3D" type="Camera3D" parent="head"]
+
+[node name="Steampunk Rifle" parent="head/Camera3D" instance=ExtResource("5_qvd5u")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.332208, -0.245264, -0.514611)
 
 [connection signal="animation_finished" from="visual/AnimationPlayer" to="." method="_on_animation_player_animation_finished"]
 [connection signal="body_entered" from="Area3D" to="." method="_on_area_3d_body_entered"]

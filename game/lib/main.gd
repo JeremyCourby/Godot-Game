@@ -28,6 +28,7 @@ func _process(delta):
 				GameState.player.isDead = false
 				GameState.player.player_life = GameState.player.player_max_life
 				GameState.player.attacking = false
+				GameState.player.collision.disabled = false
 
 func _enter_level(from:String, to:String, use_spawn_point:bool = true):
 	if (GameState.current_level != null): 

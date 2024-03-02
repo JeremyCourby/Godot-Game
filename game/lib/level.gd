@@ -10,7 +10,7 @@ func _ready():
 	anim_sky_color.play("SkyColor",0,0.005)
 	var warrokscene = load("res://scenes/warrok.tscn")
 	
-	for i in range(0,4):
+	for i in range(0,5):
 		var warrok = warrokscene.instantiate()
 		warrok.position = Vector3(GameState.player.position.x + randf_range(-10,10),GameState.player.position.y + 1,GameState.player.position.y + randf_range(-10,10))
 		add_child(warrok)
