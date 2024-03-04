@@ -3,12 +3,18 @@ extends CharacterBody3D
 @onready var anim:AnimationPlayer = $visual/AnimationPlayer
 @onready var camera_mount = $camera_mount
 @onready var visual = $visual
-@onready var healthbar = $HealthBar3D
+@onready var healthbar = $PlayerUI/HealthBar3D
+@onready var xpbar = $PlayerUI/XPBar
 @onready var collision = $CollisionShape3D
 @onready var head = $head
 @onready var head_camera = $head/Camera3D
 @onready var gun_anim = $"head/Camera3D/Steampunk Rifle/AnimationPlayer"
 @onready var gun_barrel = $"head/Camera3D/Steampunk Rifle/RayCast3D"
+@onready var fond_sword = $PlayerUI/class/FondSword
+@onready var fond_gun = $PlayerUI/class/FondGun
+@onready var icon_gun = $PlayerUI/class/FondGun/IconGun
+@onready var lock_gun = $PlayerUI/class/FondGun/Lock
+@onready var player_inv = $PlayerUI/PlayerInv
 
 signal interaction_detected(node:Node3D)
 signal interaction_detected_end(node:Node3D)
@@ -22,7 +28,6 @@ var mouse_captured:bool = false
 var isRunning:bool = false
 var isAlreadyAtt:bool = false
 var isAlreadyDead:bool = false
-var isJumping:bool = false
 var gravity = ProjectSettings.get_setting("physics/3d/default_gravity")
 var hit_area:Area3D
 var t_bob:float = 0.0
@@ -48,10 +53,14 @@ const FOV_CHANGE = 1.5
 @export var mouse_sensitivity_horizontal:float = 0.08
 @export var mouse_sensitivity_vertical:float = 0.04
 @export var player_life:float = 100
+@export var player_xp:float = 0
+@export var player_xp_max:float = 5
 @export var isDead:bool = false
 @export var player_max_life:float = 100
 @export var attacking:bool = false
 @export var player_class = SWORD
+@export var player_level = 1
+@export var player_wave_level = 0
 
 func _ready():
 	capture_mouse()
@@ -62,6 +71,10 @@ func _ready():
 	healthbar.get_node("Label").visible = true
 	healthbar.max_value = player_life
 	healthbar.min_value = 0
+	xpbar.max_value = player_xp_max
+	xpbar.min_value = 0
+	fond_sword.texture = load("res://models/menu/kenney_ui-pack-rpg-expansion/PNG/panel_brown.png")
+	player_inv.visible = false
 
 func _input(event):
 	if event is InputEventMouseMotion:
@@ -71,24 +84,51 @@ func _input(event):
 			camera_mount.rotate_x(deg_to_rad(-event.relative.y * mouse_sensitivity_vertical))
 			camera_mount.rotation.x = clamp(camera_mount.rotation.x, deg_to_rad(-40), deg_to_rad(50))
 		if player_class == GUN:
+			rotation.y = 0
 			head.rotate_y(-event.relative.x * (mouse_sensitivity_horizontal/50))
 			head_camera.rotate_x(-event.relative.y * (mouse_sensitivity_vertical/50))
 			head_camera.rotation.x = clamp(head_camera.rotation.x, deg_to_rad(-40), deg_to_rad(60))
 
 func _physics_process(delta):
 	
+	$PlayerUI/PlayerInv/FondInv/LabelWave.text = "Vague N°" + str(player_wave_level)
+	
 	var input_dir = Input.get_vector("player_left", "player_right", "player_forward", "player_backward")
 	
-	if Input.is_action_pressed("player_change_class"):
-		if player_class == SWORD:
+	if Input.is_action_just_pressed("player_inv"):
+		player_inv.visible = not player_inv.visible
+		if player_inv.visible == true :
+			Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
+			get_tree().paused = true
+		else:
+			Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
+			get_tree().paused = false
+	
+		
+	if Input.is_action_just_pressed("player_change_class"):
+		if player_class == SWORD and player_level >= 5 :
+			fond_gun.texture = load("res://models/menu/kenney_ui-pack-rpg-expansion/PNG/panel_brown.png")
+			fond_sword.texture = load("res://models/menu/kenney_ui-pack-rpg-expansion/PNG/panel_beige.png")
 			player_class = GUN
-			return
-		if player_class == GUN:
+			rotation.y = 0
+			head.rotation = camera_mount.rotation
+		else:
+			fond_sword.texture = load("res://models/menu/kenney_ui-pack-rpg-expansion/PNG/panel_brown.png")
+			fond_gun.texture = load("res://models/menu/kenney_ui-pack-rpg-expansion/PNG/panel_beige.png")
 			player_class = SWORD
-			return
 	
 	healthbar.value = player_life
 	healthbar.get_node("Label").text = str(player_life)+ " / " + str(player_max_life)
+	xpbar.value = player_xp
+	
+	if player_xp == player_xp_max:
+		xpbar.value = 0
+		player_xp = 0
+		player_level += 1
+		
+	if player_level == 5:
+		icon_gun.visible = true
+		lock_gun.visible = false
 	
 	if player_life <= 0:
 		collision.disabled = true
@@ -124,8 +164,8 @@ func _physics_process(delta):
 
 		# Handle jump.
 		if Input.is_action_pressed("player_jump") and is_on_floor():
-			isJumping = true
-			anim.play(ANIM_JUMP,0.2,1.5)
+			#isJumping = true
+			#anim.play(ANIM_JUMP,0.2,1.5)
 			velocity.y = JUMP_VELOCITY
 
 		var direction = (transform.basis * Vector3(input_dir.x, 0, input_dir.y)).normalized()
@@ -138,13 +178,13 @@ func _physics_process(delta):
 					var collider = collision.get_collider()
 					if (collider != null) and collider.is_in_group("stairs"):
 						velocity.y = 1.5
-				if not isJumping:
-					if isRunning:
-						if anim.current_animation != ANIM_RUN:
-							anim.play(ANIM_RUN,0.2)
-					else:
-						if anim.current_animation != ANIM_WALK:
-							anim.play(ANIM_WALK,0.2)
+
+				if isRunning:
+					if anim.current_animation != ANIM_RUN:
+						anim.play(ANIM_RUN,0.2)
+				else:
+					if anim.current_animation != ANIM_WALK:
+						anim.play(ANIM_WALK,0.2)
 				
 				if !attacking:
 					visual.look_at(position + direction)
@@ -222,7 +262,7 @@ func _on_area_3d_body_exited(body):
 func _on_hit_area_body_entered(body):
 	if (attacking):
 		if (isAlreadyAtt == false and body.isDying == false):
-			body.hit(1)
+			body.isHit(1)
 			isAlreadyAtt = true
 
 func _on_animation_player_animation_finished(anim_name):
@@ -235,5 +275,12 @@ func _on_animation_player_animation_finished(anim_name):
 	isAlreadyAtt = false
 	if anim_name == ANIM_DEATH:
 		isDead = true
-	if anim_name == ANIM_JUMP:
-		isJumping = false
+
+func _on_button_wave_pressed():
+	_on_button_quit_inv_pressed()
+	player_wave_level += 1
+
+func _on_button_quit_inv_pressed():
+	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
+	player_inv.visible = false
+	get_tree().paused = false

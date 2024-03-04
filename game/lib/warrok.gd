@@ -38,14 +38,13 @@ func _physics_process(delta):
 
 	if anim.current_animation != ANIM_HIT and anim.current_animation != ANIM_DEATH:
 		var dist_w_p = position.distance_to(GameState.player.position)
-		if dist_w_p < 1.25:
+		if dist_w_p < 1.65:
 			isAttacking = true
 			anim.play(ANIM_ATTACK)
 		
 	healthbar.value = life_warrok
 	
 	if anim.current_animation != ANIM_HIT and anim.current_animation != ANIM_DEATH and isAttacking == false:
-
 		nav_agent.target_position = GameState.player.position
 		var target = nav_agent.get_next_path_position()
 		if (target != position):
@@ -58,7 +57,7 @@ func _physics_process(delta):
 			move_and_slide()
 		
 	if isHitting:
-		anim.play(ANIM_HIT,0,2.2)
+		anim.play(ANIM_HIT,0.2,2.2)
 		isHitting = false
 		
 	if isDying:
@@ -82,7 +81,9 @@ func _on_animation_player_animation_finished(anim_name):
 		GameState.player.player_life -= 10
 		isAttacking = false
 
-func hit(damage):
+func isHit(damage):
+	isHitting = true
 	life_warrok -= damage
 	if (life_warrok <= 0):
 		isDying = true
+		GameState.player.player_xp += 1

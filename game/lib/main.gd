@@ -3,7 +3,7 @@ extends Node3D
 @onready var label_infos:Label = $HUD/Label
 @onready var menu:Control = $Menu
 @onready var hud:Control = $HUD
-@onready var button_quit:Button = $Menu/ButtonQuit
+@onready var button_quit:Button = $Menu/Button/SaveAndQuit
 @onready var player:CharacterBody3D = $Player
 
 var save:SaveManager = SaveManager.new()
@@ -43,6 +43,12 @@ func _enter_level(from:String, to:String, use_spawn_point:bool = true):
 				GameState.player.position = spawnpoint.position
 				GameState.player.rotation = spawnpoint.rotation
 
+func _on_resume_pressed():
+	_pause()
+
+func _on_save_pressed():
+	save.save_game()
+
 func _on_button_quit_pressed():
 	save.save_game()
 	get_tree().quit()
@@ -72,9 +78,7 @@ func _pause():
 		GameState.player.capture_mouse()
 	else:
 		GameState.player.release_mouse()
-		button_quit.grab_focus()
 	get_tree().paused = not get_tree().paused
-
 
 func _on_player_hit(node):
 	$TimerInfos.start()

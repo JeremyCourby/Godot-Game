@@ -1,4 +1,4 @@
-[gd_scene load_steps=24 format=3 uid="uid://daiuainxl06rp"]
+[gd_scene load_steps=25 format=3 uid="uid://daiuainxl06rp"]
 
 [ext_resource type="Script" path="res://lib/level.gd" id="1_720yn"]
 [ext_resource type="Script" path="res://lib/spawn_point.gd" id="2_y04cg"]
@@ -216,6 +216,13 @@ height = 0.2
 offsets = PackedFloat32Array(0, 0.996429, 1)
 colors = PackedColorArray(0, 0, 0, 1, 0, 0.901961, 0.901961, 0, 1, 1, 1, 1)
 
+[sub_resource type="Curve3D" id="Curve3D_cot21"]
+_data = {
+"points": PackedVector3Array(0, 0, 0, 0, 0, 0, -1.3896, 0, -84.9665, 0, 0, 0, 0, 0, 0, -15.3603, 0, -82.1723, 0, 0, 0, 0, 0, 0, -25.916, 0, -78.4468, 0, 0, 0, 0, 0, 0, -35.5403, 0, -70.0643, 0, 0, 0, 0, 0, 0, -41.4391, 0, -63.5446, 0, 0, 0, 0, 0, 0, -45.7855, 0, -54.8517, 0, 0, 0, 0, 0, 0, -46.096, 0, -45.8484, 0, 0, 0, 0, 0, 0, -47.3378, 0, -34.0508, 0, 0, 0, 0, 0, 0, -46.4064, 0, -26.2893, 0, 0, 0, 0, 0, 0, -44.2332, 0, -19.1487, 0, 0, 0, 0, 0, 0, -42.3704, 0, -12.9395, 0, 0, 0, 0, 0, 0, -38.9554, 0, -7.04072, 0, 0, 0, 0, 0, 0, -34.6089, 0, -0.521044, 0, 0, 0, 0, 0, 0, -29.6415, 0, 2.89403, 0, 0, 0, 0, 0, 0, -23.7428, 0, 6.61956, 0, 0, 0, 0, 0, 0, -15.9812, 0, 8.79279, 0, 0, 0, 0, 0, 0, -5.42558, 0, 10.966, 0, 0, 0, 0, 0, 0, 4.1987, 0, 12.8288, 0, 0, 0, 0, 0, 0, 16.6171, 0, 12.2079, 0, 0, 0, 0, 0, 0, 27.1728, 0, 10.3451),
+"tilts": PackedFloat32Array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0)
+}
+point_count = 20
+
 [node name="Level1" type="Node3D"]
 script = ExtResource("1_720yn")
 key = "level_1"
@@ -282,3 +289,9 @@ color_ramp = SubResource("Gradient_85ekt")
 
 [node name="camp" parent="NavigationRegion3D" instance=ExtResource("7_63ula")]
 transform = Transform3D(-0.625583, 0, -0.780157, 0, 1, 0, 0.780157, 0, -0.625583, 40.843, 0.993661, -40.7604)
+
+[node name="Path3D" type="Path3D" parent="."]
+curve = SubResource("Curve3D_cot21")
+
+[node name="PathFollow3D" type="PathFollow3D" parent="Path3D"]
+transform = Transform3D(-0.19612, 0, 0.98058, 0, 1, 0, -0.98058, 0, -0.19612, -1.3896, 0, -84.9665)
