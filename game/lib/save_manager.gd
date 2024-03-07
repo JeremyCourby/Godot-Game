@@ -3,6 +3,9 @@ class_name SaveManager extends Object
 const default_filename:String = "Save_Game"
 
 func _build():
+	if GameState.player.wave_finish == false:
+		GameState.player.player_wave_level -= 1
+		GameState.player.wave_load_number = GameState.player.wave_load_last_number
 	return {
 		"current_level": GameState.current_level_key,
 		"position_x": GameState.player.position.x,
@@ -14,8 +17,16 @@ func _build():
 		"player_level": GameState.player.player_level,
 		"player_xp": GameState.player.player_xp,
 		"player_life": GameState.player.player_life,
+		"player_max_life": GameState.player.player_max_life,
 		"portal_life": GameState.portal.portal_life,
-		"player_wave_level": GameState.player.player_wave_level
+		"player_wave_level": GameState.player.player_wave_level,
+		"player_health_level": GameState.player.health_level,
+		"player_attack_level": GameState.player.attack_level,
+		"player_speed_level": GameState.player.speed_level,
+		"player_walking_speed": GameState.player.walking_speed,
+		"player_running_speed": GameState.player.running_speed,
+		"player_base_attack": GameState.player.base_attack,
+		"wave_load_number": GameState.player.wave_load_number
 	}
 	
 func save_game():
@@ -42,5 +53,13 @@ func load_game() :
 		GameState.player.player_level = data.get("player_level", GameState.player.player_level)
 		GameState.player.player_xp = data.get("player_xp", GameState.player.player_xp)
 		GameState.player.player_life = data.get("player_life", GameState.player.player_life)
-		GameState.portal.portal_life = data.get("portal_life", GameState.portal.portal_life)
+		GameState.player.player_max_life = data.get("player_max_life", GameState.player.player_max_life)
+		GameState.player.portal_load_life = data.get("portal_life", GameState.player.portal_load_life)
 		GameState.player.player_wave_level = data.get("player_wave_level", GameState.player.player_wave_level)
+		GameState.player.health_level = data.get("player_health_level", GameState.player.health_level)
+		GameState.player.attack_level = data.get("player_attack_level", GameState.player.attack_level)
+		GameState.player.speed_level = data.get("player_speed_level", GameState.player.speed_level)
+		GameState.player.walking_speed = data.get("player_walking_speed", GameState.player.walking_speed)
+		GameState.player.running_speed = data.get("player_running_speed", GameState.player.running_speed)
+		GameState.player.base_attack = data.get("player_base_attack", GameState.player.base_attack)
+		GameState.player.wave_load_number = data.get("wave_load_number", GameState.player.wave_load_number)

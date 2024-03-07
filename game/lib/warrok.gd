@@ -49,7 +49,7 @@ func _physics_process(delta):
 	for index in range(get_slide_collision_count()):
 			var collision = get_slide_collision(index)
 			var collider = collision.get_collider()
-			if (collider != null) and collider.is_in_group("walls") and focus == "portal":
+			if (collider != null) and collider.is_in_group("walls") and focus == "portal" and isDying == false:
 				hit(1,true,collider)
 	
 	if anim.current_animation != ANIM_HIT and anim.current_animation != ANIM_DEATH and isAttacking == false:

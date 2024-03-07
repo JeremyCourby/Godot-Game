@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=3 uid="uid://bx20dw8bn17cl"]
+[gd_scene load_steps=8 format=3 uid="uid://bx20dw8bn17cl"]
 
 [ext_resource type="Texture2D" uid="uid://ovq16hr4mc1y" path="res://models/menu/kenney_ui-pack-rpg-expansion/PNG/buttonLong_brown.png" id="1_gwijs"]
 [ext_resource type="Script" path="res://lib/game_over.gd" id="1_uxcne"]
@@ -8,6 +8,11 @@
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_dwinl"]
 shader = ExtResource("3_xxsc7")
 shader_parameter/amount = 1.034
+
+[sub_resource type="LabelSettings" id="LabelSettings_twwiw"]
+font_size = 60
+shadow_size = 10
+shadow_color = Color(0, 0, 0, 0.392157)
 
 [sub_resource type="LabelSettings" id="LabelSettings_ku3ri"]
 line_spacing = 0.0
@@ -27,6 +32,18 @@ grow_horizontal = 2
 grow_vertical = 2
 texture = ExtResource("4_a72qo")
 
+[node name="Label" type="Label" parent="."]
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -163.5
+offset_top = 273.0
+offset_right = 163.5
+offset_bottom = 356.0
+grow_horizontal = 2
+text = "Game Over"
+label_settings = SubResource("LabelSettings_twwiw")
+
 [node name="VBoxContainerGameOver" type="VBoxContainer" parent="."]
 anchors_preset = 8
 anchor_left = 0.5
@@ -45,6 +62,8 @@ alignment = 1
 custom_minimum_size = Vector2(200, 50)
 layout_mode = 2
 size_flags_horizontal = 4
+focus_neighbor_top = NodePath("../ButtonQuitGame")
+focus_neighbor_bottom = NodePath("../ButtonQuitGame")
 flat = true
 
 [node name="TextureRect" type="TextureRect" parent="VBoxContainerGameOver/ButtonNewGame"]
@@ -84,6 +103,8 @@ vertical_alignment = 1
 custom_minimum_size = Vector2(200, 50)
 layout_mode = 2
 size_flags_horizontal = 4
+focus_neighbor_top = NodePath("../ButtonNewGame")
+focus_neighbor_bottom = NodePath("../ButtonNewGame")
 flat = true
 
 [node name="TextureRect" type="TextureRect" parent="VBoxContainerGameOver/ButtonQuitGame"]

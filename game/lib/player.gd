@@ -52,6 +52,7 @@ var attack_level = 1
 var speed_level = 1
 var base_attack = 1
 var number_comp_up = 0
+var is_manette = false
 
 const ANIM_WALK = "player/walking"
 const ANIM_RUN = "player/running"
@@ -86,6 +87,9 @@ const max_camera_angle_down:float = -deg_to_rad(75)
 @export var number_warrok_dead = 0
 @export var wave_finish = true
 @export var mouse_captured:bool = false
+@export var portal_load_life:float = 1000
+@export var wave_load_number:float = 5
+@export var wave_load_last_number:float = 5
 
 func _ready():
 	capture_mouse()
@@ -101,9 +105,6 @@ func _ready():
 	fond_sword.texture = load("res://models/menu/kenney_ui-pack-rpg-expansion/PNG/panel_brown.png")
 	player_inv.visible = false
 	portal_healthbar.max_value = 1000
-	label_heart.text = "Lvl. " + str(health_level)
-	label_attack.text = "Lvl. " + str(attack_level)
-	label_speed.text = "Lvl. " + str(speed_level)
 
 func _input(event):
 	if event is InputEventMouseMotion:
@@ -119,6 +120,7 @@ func _input(event):
 				head.rotate_y(-event.relative.x * (mouse_sensitivity_horizontal/50))
 				head_camera.rotate_x(-event.relative.y * (mouse_sensitivity_vertical/50))
 				head_camera.rotation.x = clamp(head_camera.rotation.x, deg_to_rad(-40), deg_to_rad(60))
+		is_manette = false
 
 func _physics_process(delta):
 	
@@ -136,6 +138,10 @@ func _physics_process(delta):
 	if Input.is_action_just_pressed("player_inv"):
 		player_inv.visible = not player_inv.visible
 		if player_inv.visible == true :
+			label_heart.text = "Lvl. " + str(health_level)
+			label_attack.text = "Lvl. " + str(attack_level)
+			label_speed.text = "Lvl. " + str(speed_level)
+			button_wave.grab_focus()
 			release_mouse()
 			anim.play(ANIM_IDLE)
 		else:
@@ -144,8 +150,10 @@ func _physics_process(delta):
 	
 	if number_comp_up > 0:
 		button_comp.visible = true
+		$PlayerUI/PlayerInv/LabelDispo.visible = true
 	else:
 		button_comp.visible = false
+		$PlayerUI/PlayerInv/LabelDispo.visible = false
 	
 	if Input.is_action_just_pressed("player_change_class"):
 		if player_class == SWORD and player_level >= 5 :
@@ -160,6 +168,7 @@ func _physics_process(delta):
 			player_class = SWORD
 	
 	healthbar.value = player_life
+	healthbar.max_value = player_max_life
 	healthbar.get_node("Label").text = str(player_life)+ " / " + str(player_max_life)
 	xpbar.value = player_xp
 	
@@ -260,18 +269,26 @@ func _physics_process(delta):
 		$camera_mount/Camera3D.clear_current(true)
 		visual.visible = false
 		head.visible = true
+		var direction = null
 		
 		if mouse_captured:
 			var joypad_dir:Vector2 = Input.get_vector("player_look_left", "player_look_right", "player_look_up", "player_look_down")
 			if joypad_dir.length() > 0:
 				var look_dir = joypad_dir * delta
 				rotate_y(-look_dir.x * 2.0)
-				camera2.rotate_x(-look_dir.x)
-				camera2.rotation.x = clamp(head.rotation.x - look_dir.x, max_camera_angle_down, max_camera_angle_up)
+				#head.rotate_y(-look_dir.x * 4.0)
+				head.rotate_x(-look_dir.y)
+				#head.rotation.x = clamp(head.rotation.x - look_dir.x, max_camera_angle_down, max_camera_angle_up)
+				is_manette = true
+		
+		if is_manette == true:
+			direction = (transform.basis * Vector3(input_dir.x,0,input_dir.y)).normalized()
+		else:
+			direction = (head.transform.basis * Vector3(input_dir.x,0,input_dir.y)).normalized()
+		
 		if Input.is_action_pressed("player_jump") and is_on_floor():
 			velocity.y = JUMP_VELOCITY
-
-		var direction = (head.transform.basis * Vector3(input_dir.x,0,input_dir.y)).normalized()
+		
 		if is_on_floor():
 			if direction:
 				velocity.x = direction.x * SPEED
@@ -357,6 +374,7 @@ func _on_button_heart_pressed():
 		healthbar.max_value = player_max_life
 		label_heart.text = "Lvl. " + str(health_level)
 		number_comp_up -= 1
+		button_wave.grab_focus()
 
 func _on_button_attack_pressed():
 	if number_comp_up > 0:
@@ -364,10 +382,17 @@ func _on_button_attack_pressed():
 		base_attack += 0.2
 		label_attack.text = "Lvl. " + str(attack_level)
 		number_comp_up -= 1
+		button_wave.grab_focus()
 
 func _on_button_speed_pressed():
 	if number_comp_up > 0:
 		speed_level += 1
 		running_speed += 0.5
+		walking_speed += 0.25
 		label_speed.text = "Lvl. " + str(speed_level)
 		number_comp_up -= 1
+		button_wave.grab_focus()
+
+func _on_button_heart_focus_entered():
+	if button_comp.visible == false:
+		button_wave.grab_focus()

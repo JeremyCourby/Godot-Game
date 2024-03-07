@@ -87,6 +87,7 @@ func _pause():
 		GameState.player.capture_mouse()
 	else:
 		GameState.player.release_mouse()
+		$Menu/Button/Resume.grab_focus()
 	get_tree().paused = not get_tree().paused
 
 func _on_player_hit(_node):

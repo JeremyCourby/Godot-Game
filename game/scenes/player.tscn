@@ -1,4 +1,4 @@
-[gd_scene load_steps=28 format=3 uid="uid://bggov3ak0ysqs"]
+[gd_scene load_steps=30 format=3 uid="uid://bggov3ak0ysqs"]
 
 [ext_resource type="Script" path="res://lib/player.gd" id="1_k5g6x"]
 [ext_resource type="PackedScene" uid="uid://ctoenkxklrdyj" path="res://scenes/paladin.tscn" id="1_stwfy"]
@@ -19,6 +19,7 @@
 [ext_resource type="Texture2D" uid="uid://dkc8kt3ka2qns" path="res://models/menu/icons8-course-50 (1).png" id="14_0ipeq"]
 [ext_resource type="Texture2D" uid="uid://d0ee3nxmbout1" path="res://models/menu/kenney_ui-pack-rpg-expansion/PNG/iconCross_brown.png" id="14_2nqlo"]
 [ext_resource type="Texture2D" uid="uid://c8cfrpkbr7wlh" path="res://models/menu/kenney_ui-pack-rpg-expansion/PNG/buttonRound_beige.png" id="18_035vx"]
+[ext_resource type="Texture2D" uid="uid://14fhl6g0hcb1" path="res://models/menu/kenney_ui-pack-rpg-expansion/PNG/arrowBeige_left.png" id="20_bdoxx"]
 
 [sub_resource type="CylinderShape3D" id="CylinderShape3D_x0nrt"]
 radius = 0.3
@@ -53,6 +54,9 @@ line_spacing = 0.0
 font_size = 20
 font_color = Color(0, 1, 1, 1)
 shadow_size = 0
+
+[sub_resource type="LabelSettings" id="LabelSettings_o0ci0"]
+font_size = 20
 
 [node name="Player" type="CharacterBody3D" groups=["player"]]
 platform_floor_layers = 4294901769
@@ -418,6 +422,8 @@ offset_right = 100.0
 offset_bottom = -56.0
 grow_horizontal = 2
 grow_vertical = 2
+focus_neighbor_top = NodePath("../ButtonQuitInv")
+focus_neighbor_bottom = NodePath("../../ContainerButtons/ButtonHeart")
 flat = true
 
 [node name="TextureRect" type="TextureRect" parent="PlayerUI/PlayerInv/FondInv/ButtonWave"]
@@ -462,6 +468,7 @@ anchor_right = 1.0
 offset_left = -110.0
 offset_bottom = 110.0
 grow_horizontal = 0
+focus_neighbor_bottom = NodePath("../ButtonWave")
 flat = true
 
 [node name="TextureRect" type="TextureRect" parent="PlayerUI/PlayerInv/FondInv/ButtonQuitInv"]
@@ -634,8 +641,11 @@ grow_vertical = 0
 alignment = 1
 
 [node name="ButtonHeart" type="Button" parent="PlayerUI/PlayerInv/ContainerButtons"]
-custom_minimum_size = Vector2(100, 0)
+custom_minimum_size = Vector2(100, 50)
 layout_mode = 2
+focus_neighbor_left = NodePath("../ButtonSpeed")
+focus_neighbor_top = NodePath("../../FondInv/ButtonWave")
+focus_neighbor_right = NodePath("../ButtonAttack")
 flat = true
 
 [node name="TextureRect" type="TextureRect" parent="PlayerUI/PlayerInv/ContainerButtons/ButtonHeart"]
@@ -675,8 +685,11 @@ expand_mode = 3
 stretch_mode = 5
 
 [node name="ButtonAttack" type="Button" parent="PlayerUI/PlayerInv/ContainerButtons"]
-custom_minimum_size = Vector2(100, 0)
+custom_minimum_size = Vector2(100, 50)
 layout_mode = 2
+focus_neighbor_left = NodePath("../ButtonHeart")
+focus_neighbor_top = NodePath("../../FondInv/ButtonWave")
+focus_neighbor_right = NodePath("../ButtonSpeed")
 flat = true
 
 [node name="TextureRect" type="TextureRect" parent="PlayerUI/PlayerInv/ContainerButtons/ButtonAttack"]
@@ -716,10 +729,13 @@ expand_mode = 3
 stretch_mode = 5
 
 [node name="ButtonSpeed" type="Button" parent="PlayerUI/PlayerInv/ContainerButtons"]
-custom_minimum_size = Vector2(100, 0)
+custom_minimum_size = Vector2(100, 50)
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
+focus_neighbor_left = NodePath("../ButtonAttack")
+focus_neighbor_top = NodePath("../../FondInv/ButtonWave")
+focus_neighbor_right = NodePath("../ButtonHeart")
 flat = true
 
 [node name="TextureRect" type="TextureRect" parent="PlayerUI/PlayerInv/ContainerButtons/ButtonSpeed"]
@@ -758,8 +774,63 @@ texture = ExtResource("14_2nqlo")
 expand_mode = 3
 stretch_mode = 5
 
+[node name="LabelDispo" type="Label" parent="PlayerUI/PlayerInv"]
+visible = false
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -154.0
+offset_top = 15.0
+offset_right = 154.0
+offset_bottom = 38.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "Amélioration de compétence disponible"
+
+[node name="ArrowBeigeLeft" type="Sprite2D" parent="PlayerUI"]
+position = Vector2(1890, 450)
+rotation = 1.5708
+texture = ExtResource("20_bdoxx")
+
+[node name="ArrowBeigeLeft2" type="Sprite2D" parent="PlayerUI"]
+position = Vector2(1890, 520)
+rotation = -1.5708
+texture = ExtResource("20_bdoxx")
+
+[node name="Label" type="Label" parent="PlayerUI"]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -49.0
+offset_top = 474.0
+offset_right = -9.0
+offset_bottom = 497.0
+grow_horizontal = 0
+text = "TAB"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Label2" type="Label" parent="PlayerUI"]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -138.0
+offset_top = 1040.0
+offset_right = -11.0
+offset_bottom = 1068.0
+grow_horizontal = 0
+text = "E : Inventaire"
+label_settings = SubResource("LabelSettings_o0ci0")
+horizontal_alignment = 1
+vertical_alignment = 1
+
 [node name="TimerRegen" type="Timer" parent="."]
-wait_time = 0.5
+wait_time = 0.3
 autostart = true
 
 [connection signal="animation_finished" from="visual/AnimationPlayer" to="." method="_on_animation_player_animation_finished"]
@@ -767,6 +838,7 @@ autostart = true
 [connection signal="body_exited" from="Area3D" to="." method="_on_area_3d_body_exited"]
 [connection signal="pressed" from="PlayerUI/PlayerInv/FondInv/ButtonWave" to="." method="_on_button_wave_pressed"]
 [connection signal="pressed" from="PlayerUI/PlayerInv/FondInv/ButtonQuitInv" to="." method="_on_button_quit_inv_pressed"]
+[connection signal="focus_entered" from="PlayerUI/PlayerInv/ContainerButtons/ButtonHeart" to="." method="_on_button_heart_focus_entered"]
 [connection signal="pressed" from="PlayerUI/PlayerInv/ContainerButtons/ButtonHeart" to="." method="_on_button_heart_pressed"]
 [connection signal="pressed" from="PlayerUI/PlayerInv/ContainerButtons/ButtonAttack" to="." method="_on_button_attack_pressed"]
 [connection signal="pressed" from="PlayerUI/PlayerInv/ContainerButtons/ButtonSpeed" to="." method="_on_button_speed_pressed"]

@@ -6,7 +6,7 @@ class_name Level extends Node3D
 @export var key:String
 
 var wave_level = 0
-var enemy_number = 5
+var enemy_number = GameState.player.wave_load_number
 var enemy_wave_number = 0
 var actual_enemy_wave_number = enemy_wave_number
 
@@ -36,10 +36,13 @@ func wave(wave_number):
 	
 	var warrokscene = load("res://scenes/warrok.tscn")
 	
+	GameState.player.wave_load_last_number = enemy_number
+	
 	var enemy_mult = 1.1
 	if(wave_number > 1):
 		enemy_number = enemy_number * enemy_mult
 	
+	GameState.player.wave_load_number = enemy_number
 	enemy_wave_number = enemy_number
 	
 	aff_lib_wave("Lancement de la vague n°" + str(wave_number))
