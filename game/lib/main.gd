@@ -5,6 +5,7 @@ extends Node3D
 @onready var hud:Control = $HUD
 @onready var button_quit:Button = $Menu/Button/SaveAndQuit
 @onready var player:CharacterBody3D = $Player
+@onready var game_over_menu = $GameOverMenu
 
 var save:SaveManager = SaveManager.new()
 var current_level_change = null
@@ -13,13 +14,21 @@ var current_level_change = null
 func _ready():
 	GameState.player = $Player
 	_enter_level("default", "level_1")
-	save.load_game()
+	if GameState.load_save == true:
+		save.load_game()
 	_enter_level("default", GameState.current_level_key, GameState.player.position == Vector3.ZERO)
 	label_infos.visible = false
 	menu.visible = false
+	game_over_menu.visible = false
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta):
+func _process(_delta):
+	
+	if GameState.portal.portal_life <= 0:
+		get_tree().paused = true
+		Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
+		game_over_menu.visible = true
+	
 	if GameState.player.isDead == true:
 		for spawnpoint:SpawnPoint in GameState.current_level.find_children("", "SpawnPoint"):
 			if (spawnpoint.key == "default"):
@@ -59,11 +68,11 @@ func _on_player_interaction_detected(node):
 		label_infos.visible = true
 		current_level_change = node.get_parent()
 
-func _on_player_interaction_detected_end(node):
+func _on_player_interaction_detected_end(_node):
 	label_infos.visible = false
 	current_level_change = null
 	
-func _input(event):
+func _input(_event):
 	if (not get_tree().paused):
 		if Input.is_action_just_pressed("player_interact"):
 			if(current_level_change != null):
@@ -80,7 +89,7 @@ func _pause():
 		GameState.player.release_mouse()
 	get_tree().paused = not get_tree().paused
 
-func _on_player_hit(node):
+func _on_player_hit(_node):
 	$TimerInfos.start()
 
 func _on_timer_infos_timeout():

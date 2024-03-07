@@ -1,4 +1,4 @@
-[gd_scene load_steps=23 format=3 uid="uid://bggov3ak0ysqs"]
+[gd_scene load_steps=28 format=3 uid="uid://bggov3ak0ysqs"]
 
 [ext_resource type="Script" path="res://lib/player.gd" id="1_k5g6x"]
 [ext_resource type="PackedScene" uid="uid://ctoenkxklrdyj" path="res://scenes/paladin.tscn" id="1_stwfy"]
@@ -12,17 +12,32 @@
 [ext_resource type="Texture2D" uid="uid://bxbpk1r682cc7" path="res://models/menu/icons8-cadenas-30 (1).png" id="10_5o8jb"]
 [ext_resource type="Texture2D" uid="uid://ovq16hr4mc1y" path="res://models/menu/kenney_ui-pack-rpg-expansion/PNG/buttonLong_brown.png" id="11_7qws5"]
 [ext_resource type="Texture2D" uid="uid://10jmw4c1716j" path="res://models/menu/kenney_ui-pack-rpg-expansion/PNG/panel_brown.png" id="11_8frxu"]
+[ext_resource type="Texture2D" uid="uid://dthyoyny0hof1" path="res://models/menu/icons8-house-fence-48.png" id="11_o5tqa"]
 [ext_resource type="Texture2D" uid="uid://b3fn5yymrmn0b" path="res://models/menu/icons8-aimer-48.png" id="11_wg7ct"]
 [ext_resource type="Texture2D" uid="uid://bladki2aknh81" path="res://models/menu/icons8-épée-48 (2).png" id="13_np20i"]
 [ext_resource type="Texture2D" uid="uid://cyaswlxxtj40m" path="res://models/menu/kenney_ui-pack-rpg-expansion/PNG/buttonRound_brown.png" id="13_xhbj8"]
 [ext_resource type="Texture2D" uid="uid://dkc8kt3ka2qns" path="res://models/menu/icons8-course-50 (1).png" id="14_0ipeq"]
 [ext_resource type="Texture2D" uid="uid://d0ee3nxmbout1" path="res://models/menu/kenney_ui-pack-rpg-expansion/PNG/iconCross_brown.png" id="14_2nqlo"]
+[ext_resource type="Texture2D" uid="uid://c8cfrpkbr7wlh" path="res://models/menu/kenney_ui-pack-rpg-expansion/PNG/buttonRound_beige.png" id="18_035vx"]
 
 [sub_resource type="CylinderShape3D" id="CylinderShape3D_x0nrt"]
 radius = 0.3
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_5q7xo"]
 size = Vector3(0.534058, 1.68872, 0.838867)
+
+[sub_resource type="LabelSettings" id="LabelSettings_03md6"]
+font_size = 50
+outline_size = 10
+outline_color = Color(0, 0, 0, 1)
+shadow_color = Color(0, 0, 0, 0.392157)
+
+[sub_resource type="LabelSettings" id="LabelSettings_woqgr"]
+font_size = 25
+
+[sub_resource type="LabelSettings" id="LabelSettings_r0nkt"]
+font_size = 35
+font_color = Color(0, 0, 0, 1)
 
 [sub_resource type="LabelSettings" id="LabelSettings_eyea5"]
 font_size = 20
@@ -112,6 +127,79 @@ offset_top = -104.0
 offset_right = 150.0
 offset_bottom = -98.0
 grow_vertical = 0
+
+[node name="HealthPortal" parent="PlayerUI" instance=ExtResource("4_juton")]
+layout_mode = 1
+anchors_preset = 4
+anchor_left = 0.0
+anchor_right = 0.0
+offset_left = 91.0
+offset_top = 359.0
+offset_right = 819.0
+offset_bottom = 379.0
+grow_horizontal = 1
+rotation = -1.5708
+
+[node name="LabelWaveAff" type="Label" parent="PlayerUI"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -20.0
+offset_top = 74.0
+offset_right = 20.0
+offset_bottom = 143.0
+grow_horizontal = 2
+label_settings = SubResource("LabelSettings_03md6")
+
+[node name="TextureRect" type="TextureRect" parent="PlayerUI"]
+layout_mode = 2
+offset_left = 50.0
+offset_top = 930.0
+offset_right = 150.0
+offset_bottom = 1038.57
+grow_horizontal = 0
+texture = ExtResource("18_035vx")
+expand_mode = 5
+
+[node name="Label" type="Label" parent="PlayerUI/TextureRect"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -3.0
+offset_bottom = -3.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "Lvl. 1"
+label_settings = SubResource("LabelSettings_woqgr")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="FondNumberEnemy" type="TextureRect" parent="PlayerUI"]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -159.0
+offset_top = 43.0
+offset_right = -59.0
+offset_bottom = 143.0
+grow_horizontal = 0
+texture = ExtResource("6_rphpg")
+expand_mode = 5
+
+[node name="LabelNumberEnemy" type="Label" parent="PlayerUI/FondNumberEnemy"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "0 / 0"
+label_settings = SubResource("LabelSettings_r0nkt")
+horizontal_alignment = 1
+vertical_alignment = 1
 
 [node name="class" type="VBoxContainer" parent="PlayerUI"]
 layout_mode = 1
@@ -207,6 +295,67 @@ grow_vertical = 2
 texture = ExtResource("10_5o8jb")
 expand_mode = 5
 
+[node name="FondWall" type="TextureRect" parent="PlayerUI/class"]
+layout_mode = 2
+texture = ExtResource("6_rphpg")
+expand_mode = 5
+
+[node name="IconWall" type="TextureRect" parent="PlayerUI/class/FondWall"]
+visible = false
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -25.0
+offset_top = -27.5
+offset_right = 30.0
+offset_bottom = 27.5
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("11_o5tqa")
+expand_mode = 5
+
+[node name="Lock" type="Control" parent="PlayerUI/class/FondWall"]
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="Label" type="Label" parent="PlayerUI/class/FondWall/Lock"]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -2.0
+offset_top = 19.0
+offset_right = 62.0
+offset_bottom = 53.0
+grow_horizontal = 2
+grow_vertical = 0
+text = "Lvl. 8"
+label_settings = SubResource("LabelSettings_eyea5")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="IconLock" type="TextureRect" parent="PlayerUI/class/FondWall/Lock"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = 10.0
+offset_top = -1.0
+offset_right = 50.0
+offset_bottom = 39.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("10_5o8jb")
+expand_mode = 5
+
 [node name="PlayerInv" type="Control" parent="PlayerUI"]
 process_mode = 3
 custom_minimum_size = Vector2(10, 10)
@@ -216,10 +365,10 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -350.0
-offset_top = -350.0
-offset_right = 350.0
-offset_bottom = 350.0
+offset_left = -250.0
+offset_top = -250.0
+offset_right = 250.0
+offset_bottom = 250.0
 grow_horizontal = 2
 grow_vertical = 2
 
@@ -230,10 +379,10 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -350.0
-offset_top = -350.0
-offset_right = 350.0
-offset_bottom = 350.0
+offset_left = -250.0
+offset_top = -250.0
+offset_right = 250.0
+offset_bottom = 250.0
 grow_horizontal = 2
 grow_vertical = 2
 texture = ExtResource("6_rphpg")
@@ -264,9 +413,9 @@ anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
 offset_left = -100.0
-offset_top = -189.0
+offset_top = -106.0
 offset_right = 100.0
-offset_bottom = -139.0
+offset_bottom = -56.0
 grow_horizontal = 2
 grow_vertical = 2
 flat = true
@@ -358,9 +507,9 @@ anchor_top = 1.0
 anchor_right = 0.5
 anchor_bottom = 1.0
 offset_left = -154.0
-offset_top = -210.0
+offset_top = -202.0
 offset_right = 154.0
-offset_bottom = -110.0
+offset_bottom = -102.0
 grow_horizontal = 2
 grow_vertical = 0
 
@@ -477,9 +626,9 @@ anchor_top = 1.0
 anchor_right = 0.5
 anchor_bottom = 1.0
 offset_left = -154.0
-offset_top = -97.0
+offset_top = -90.0
 offset_right = 154.0
-offset_bottom = -47.0
+offset_bottom = -40.0
 grow_horizontal = 2
 grow_vertical = 0
 alignment = 1
@@ -609,8 +758,16 @@ texture = ExtResource("14_2nqlo")
 expand_mode = 3
 stretch_mode = 5
 
+[node name="TimerRegen" type="Timer" parent="."]
+wait_time = 0.5
+autostart = true
+
 [connection signal="animation_finished" from="visual/AnimationPlayer" to="." method="_on_animation_player_animation_finished"]
 [connection signal="body_entered" from="Area3D" to="." method="_on_area_3d_body_entered"]
 [connection signal="body_exited" from="Area3D" to="." method="_on_area_3d_body_exited"]
 [connection signal="pressed" from="PlayerUI/PlayerInv/FondInv/ButtonWave" to="." method="_on_button_wave_pressed"]
 [connection signal="pressed" from="PlayerUI/PlayerInv/FondInv/ButtonQuitInv" to="." method="_on_button_quit_inv_pressed"]
+[connection signal="pressed" from="PlayerUI/PlayerInv/ContainerButtons/ButtonHeart" to="." method="_on_button_heart_pressed"]
+[connection signal="pressed" from="PlayerUI/PlayerInv/ContainerButtons/ButtonAttack" to="." method="_on_button_attack_pressed"]
+[connection signal="pressed" from="PlayerUI/PlayerInv/ContainerButtons/ButtonSpeed" to="." method="_on_button_speed_pressed"]
+[connection signal="timeout" from="TimerRegen" to="." method="_on_timer_regen_timeout"]

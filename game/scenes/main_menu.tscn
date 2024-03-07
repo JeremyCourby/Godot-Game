@@ -1,3 +1,150 @@
-[gd_scene format=3 uid="uid://dwwaribhrhvus"]
+[gd_scene load_steps=4 format=3 uid="uid://dwwaribhrhvus"]
 
-[node name="MainMenu" type="Node2D"]
+[ext_resource type="Texture2D" uid="uid://ovq16hr4mc1y" path="res://models/menu/kenney_ui-pack-rpg-expansion/PNG/buttonLong_brown.png" id="1_kfxje"]
+[ext_resource type="Script" path="res://lib/main_menu.gd" id="1_vkn5v"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_8b6eq"]
+line_spacing = 0.0
+font_size = 20
+font_color = Color(0, 1, 1, 1)
+shadow_size = 0
+
+[node name="MainMenu" type="CanvasLayer"]
+script = ExtResource("1_vkn5v")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -100.0
+offset_top = -79.0
+offset_right = 100.0
+offset_bottom = 79.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="ButtonNewGame" type="Button" parent="VBoxContainer"]
+custom_minimum_size = Vector2(200, 50)
+layout_mode = 2
+focus_neighbor_top = NodePath("../ButtonQuitGame")
+focus_neighbor_bottom = NodePath("../ButtonLoadGame")
+flat = true
+
+[node name="TextureRect" type="TextureRect" parent="VBoxContainer/ButtonNewGame"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -100.0
+offset_top = -25.0
+offset_right = 100.0
+offset_bottom = 25.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("1_kfxje")
+
+[node name="Label" type="Label" parent="VBoxContainer/ButtonNewGame"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -100.0
+offset_top = -27.0
+offset_right = 100.0
+offset_bottom = 23.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "Nouvelle partie"
+label_settings = SubResource("LabelSettings_8b6eq")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="ButtonLoadGame" type="Button" parent="VBoxContainer"]
+custom_minimum_size = Vector2(200, 50)
+layout_mode = 2
+focus_neighbor_top = NodePath("../ButtonNewGame")
+focus_neighbor_bottom = NodePath("../ButtonQuitGame")
+flat = true
+
+[node name="TextureRect" type="TextureRect" parent="VBoxContainer/ButtonLoadGame"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -100.0
+offset_top = -25.0
+offset_right = 100.0
+offset_bottom = 25.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("1_kfxje")
+
+[node name="Label" type="Label" parent="VBoxContainer/ButtonLoadGame"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -100.0
+offset_top = -27.0
+offset_right = 100.0
+offset_bottom = 23.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "Charger une partie"
+label_settings = SubResource("LabelSettings_8b6eq")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="ButtonQuitGame" type="Button" parent="VBoxContainer"]
+custom_minimum_size = Vector2(200, 50)
+layout_mode = 2
+focus_neighbor_top = NodePath("../ButtonLoadGame")
+focus_neighbor_bottom = NodePath("../ButtonNewGame")
+flat = true
+
+[node name="TextureRect" type="TextureRect" parent="VBoxContainer/ButtonQuitGame"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -100.0
+offset_top = -25.0
+offset_right = 100.0
+offset_bottom = 25.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("1_kfxje")
+
+[node name="Label" type="Label" parent="VBoxContainer/ButtonQuitGame"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -100.0
+offset_top = -27.0
+offset_right = 100.0
+offset_bottom = 23.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "Quitter"
+label_settings = SubResource("LabelSettings_8b6eq")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[connection signal="pressed" from="VBoxContainer/ButtonNewGame" to="." method="_on_button_new_game_pressed"]
+[connection signal="pressed" from="VBoxContainer/ButtonLoadGame" to="." method="_on_button_load_game_pressed"]
+[connection signal="pressed" from="VBoxContainer/ButtonQuitGame" to="." method="_on_button_quit_game_pressed"]

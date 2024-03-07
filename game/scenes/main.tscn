@@ -1,9 +1,10 @@
-[gd_scene load_steps=7 format=3 uid="uid://c6bkc3swfmbt"]
+[gd_scene load_steps=8 format=3 uid="uid://c6bkc3swfmbt"]
 
 [ext_resource type="Script" path="res://lib/main.gd" id="1_ggskb"]
 [ext_resource type="PackedScene" uid="uid://bggov3ak0ysqs" path="res://scenes/player.tscn" id="1_uqely"]
 [ext_resource type="Shader" path="res://lib/shaders.gdshader" id="3_5hlm0"]
 [ext_resource type="Texture2D" uid="uid://d3dyy3inem1qk" path="res://assets/textures/architecture/Travertine009_1K-JPG_Displacement.jpg" id="4_dchaq"]
+[ext_resource type="PackedScene" uid="uid://bx20dw8bn17cl" path="res://scenes/game_over.tscn" id="5_0rs6r"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_bahvr"]
 shader = ExtResource("3_5hlm0")
@@ -102,6 +103,10 @@ text = "Sauvegarder et Quitter"
 [node name="TimerInfos" type="Timer" parent="."]
 wait_time = 0.5
 one_shot = true
+
+[node name="GameOverMenu" parent="." instance=ExtResource("5_0rs6r")]
+process_mode = 3
+visible = false
 
 [connection signal="hit" from="Player" to="." method="_on_player_hit"]
 [connection signal="interaction_detected" from="Player" to="." method="_on_player_interaction_detected"]

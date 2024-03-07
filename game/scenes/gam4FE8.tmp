@@ -1,0 +1,108 @@
+[gd_scene load_steps=4 format=3 uid="uid://bx20dw8bn17cl"]
+
+[ext_resource type="Texture2D" uid="uid://ovq16hr4mc1y" path="res://models/menu/kenney_ui-pack-rpg-expansion/PNG/buttonLong_brown.png" id="1_gwijs"]
+[ext_resource type="Script" path="res://lib/game_over.gd" id="1_uxcne"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_ku3ri"]
+line_spacing = 0.0
+font_size = 20
+font_color = Color(0, 1, 1, 1)
+shadow_size = 0
+
+[node name="GameOverMenu" type="CanvasLayer"]
+script = ExtResource("1_uxcne")
+
+[node name="VBoxContainerGameOver" type="VBoxContainer" parent="."]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -100.0
+offset_top = -79.0
+offset_right = 100.0
+offset_bottom = 79.0
+grow_horizontal = 2
+grow_vertical = 2
+alignment = 1
+
+[node name="ButtonNewGame" type="Button" parent="VBoxContainerGameOver"]
+custom_minimum_size = Vector2(200, 50)
+layout_mode = 2
+size_flags_horizontal = 4
+flat = true
+
+[node name="TextureRect" type="TextureRect" parent="VBoxContainerGameOver/ButtonNewGame"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -100.0
+offset_top = -25.0
+offset_right = 100.0
+offset_bottom = 25.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("1_gwijs")
+
+[node name="Label" type="Label" parent="VBoxContainerGameOver/ButtonNewGame"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -100.0
+offset_top = -27.0
+offset_right = 100.0
+offset_bottom = 23.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "Nouvelle partie"
+label_settings = SubResource("LabelSettings_ku3ri")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="ButtonQuitGame" type="Button" parent="VBoxContainerGameOver"]
+custom_minimum_size = Vector2(200, 50)
+layout_mode = 2
+size_flags_horizontal = 4
+flat = true
+
+[node name="TextureRect" type="TextureRect" parent="VBoxContainerGameOver/ButtonQuitGame"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -100.0
+offset_top = -25.0
+offset_right = 100.0
+offset_bottom = 25.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("1_gwijs")
+
+[node name="Label" type="Label" parent="VBoxContainerGameOver/ButtonQuitGame"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -100.0
+offset_top = -27.0
+offset_right = 100.0
+offset_bottom = 23.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "Quitter"
+label_settings = SubResource("LabelSettings_ku3ri")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[connection signal="pressed" from="VBoxContainerGameOver/ButtonNewGame" to="." method="_on_button_new_game_pressed"]
+[connection signal="pressed" from="VBoxContainerGameOver/ButtonQuitGame" to="." method="_on_button_quit_game_pressed"]

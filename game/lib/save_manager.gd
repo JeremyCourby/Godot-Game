@@ -11,6 +11,11 @@ func _build():
 		"rotation_x": GameState.player.rotation_degrees.x,
 		"rotation_y": GameState.player.rotation_degrees.y,
 		"rotation_z": GameState.player.rotation_degrees.z,
+		"player_level": GameState.player.player_level,
+		"player_xp": GameState.player.player_xp,
+		"player_life": GameState.player.player_life,
+		"portal_life": GameState.portal.portal_life,
+		"player_wave_level": GameState.player.player_wave_level
 	}
 	
 func save_game():
@@ -34,3 +39,8 @@ func load_game() :
 		GameState.player.rotation_degrees.y = data.get("rotation_y", GameState.player.rotation_degrees.y)
 		GameState.player.rotation_degrees.z = data.get("rotation_z", GameState.player.rotation_degrees.z)
 		GameState.current_level_key = data.get("current_level", GameState.current_level_key)
+		GameState.player.player_level = data.get("player_level", GameState.player.player_level)
+		GameState.player.player_xp = data.get("player_xp", GameState.player.player_xp)
+		GameState.player.player_life = data.get("player_life", GameState.player.player_life)
+		GameState.portal.portal_life = data.get("portal_life", GameState.portal.portal_life)
+		GameState.player.player_wave_level = data.get("player_wave_level", GameState.player.player_wave_level)
