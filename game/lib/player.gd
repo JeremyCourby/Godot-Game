@@ -53,6 +53,10 @@ var speed_level = 1
 var base_attack = 1
 var number_comp_up = 0
 var is_manette = false
+var music_is_playing = false
+var running_is_playing = false
+var footsteps_is_playing = false
+var iswalking = true
 
 const ANIM_WALK = "player/walking"
 const ANIM_RUN = "player/running"
@@ -126,8 +130,13 @@ func _physics_process(delta):
 	
 	if wave_finish == true:
 		button_wave.disabled = false
+		$AudioStreamPlayer3D.stop()
+		music_is_playing = false
 	else:
 		button_wave.disabled = true
+		if music_is_playing == false:
+			$AudioStreamPlayer3D.play()
+			music_is_playing = true
 	
 	label_wave.text = "Vague N°" + str(player_wave_level)
 	label_level.text = "Lvl. " + str(player_level)
@@ -205,6 +214,15 @@ func _physics_process(delta):
 	else:
 		SPEED = walking_speed
 		isRunning = false
+	
+	#if isRunning == false and running_is_playing == false:
+		#$AudioStreamPlayer3D2.play()
+		#
+	#if iswalking == false and footsteps_is_playing == false:
+		#$AudioStreamPlayer3D3.play()
+	#
+	#if velocity == Vector3(0,0,0) :
+		#iswalking = false
 	
 	if player_class == SWORD and mouse_captured:
 		$camera_mount/Camera3D.set_current(not $camera_mount/Camera3D.current)
@@ -396,3 +414,13 @@ func _on_button_speed_pressed():
 func _on_button_heart_focus_entered():
 	if button_comp.visible == false:
 		button_wave.grab_focus()
+
+func _on_audio_stream_player_3d_finished():
+	if wave_finish == false:
+		$AudioStreamPlayer3D.play()
+
+func _on_audio_stream_player_3d_2_finished():
+	$AudioStreamPlayer3D2.play()
+
+func _on_audio_stream_player_3d_3_finished():
+	$AudioStreamPlayer3D3.play()

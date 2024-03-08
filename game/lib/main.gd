@@ -16,6 +16,7 @@ func _ready():
 	_enter_level("default", "level_1")
 	if GameState.load_save == true:
 		save.load_game()
+		GameState.load_save = false
 	_enter_level("default", GameState.current_level_key, GameState.player.position == Vector3.ZERO)
 	label_infos.visible = false
 	menu.visible = false
@@ -28,6 +29,7 @@ func _process(_delta):
 		get_tree().paused = true
 		Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
 		game_over_menu.visible = true
+		game_over_menu.ButtonNewGame.grab_focus()
 	
 	if GameState.player.isDead == true:
 		for spawnpoint:SpawnPoint in GameState.current_level.find_children("", "SpawnPoint"):
